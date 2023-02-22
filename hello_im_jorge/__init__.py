@@ -21,7 +21,7 @@ with app.app_context():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'data.db')
     app.config['MAIL_SERVER']='smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'me.garciadiego@gmail.com'
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
@@ -32,19 +32,6 @@ with app.app_context():
     # migrate = Migrate(app, db)
     Base = automap_base()
     Base.prepare(db.engine, reflect=True)
-
-
-    ##########################################
-
-    ##########################################
-    ########### LOGIN CONFIGURATION ##########
-    ##########################################
-    # login_manager = LoginManager()
-
-    # login_manager.init_app(app)
-    # login_manager.login_view = 'core'
-
-    ##########################################
 
     from hello_im_jorge.core.views import core
 
