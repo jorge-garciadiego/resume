@@ -2,16 +2,32 @@ from hello_im_jorge import db
 from hello_im_jorge.models import Skills, Users, Education, Experience, Bullet
 from flask import render_template, request, Blueprint
 from datetime import datetime, date
+from flask_mail import Message
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, Email
+from flask import current_app
+import os
 
 core = Blueprint('core', __name__)
+
 
 def date_diff(date1, date2):
     date_format = "%B %Y"
     return (datetime.strptime(date1, date_format) - datetime.strptime(date2,date_format))
 
+# Contact me Form
+class ContactMeForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email(message='Invalid email address')])
+    subject = StringField("Subject", validators=[DataRequired()])
+    message = TextAreaField("Message", validators=[DataRequired()])
+    submit = SubmitField("Send Message")
 
-@core.route('/', methods=['GET'])
+
+@core.route('/', methods=['GET', 'POST'])
 def index():
+    
     icons = {'Data Science': 'uil uil-brain', 'Data Visualization':'uil uil-chart-line', 'Frontend developer': 'uil uil-brackets-curly', 'Languages': 'uil uil-language'}
     
     user = db.session.query(Users).all()
@@ -49,8 +65,26 @@ def index():
     
     for i in experience:
         exp_bullets[i.id] = [b.description for b in bullet if b.experience_id == i.id]
-        
     
+    form = ContactMeForm()
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            name = form.name.data
+            email = form.email.data
+            subject = form.subject.data
+            body = form.message.data
+            
+            
+            msg = Message(subject=f"{name} - sent by {subject}", body=f"Sent by {name}: {email}\n\nSubject: {subject}\n\n{body}", sender='me.garciadiego@gmail.com', recipients=['jorge.garciadiego@icloud.com'])
+            mail = current_app._get_current_object().extensions.get('mail')
+            mail.send(msg)
+            
+            form.name.data = ''
+            form.email.data = ''
+            form.subject.data = ''
+            form.message.data = ''
+                 
     # create a dictionary with the bullets for each job the key is the id of the experience table
     
-    return render_template('index.html', user=user, skill_cats=skill_cats, skills=skills, edu=edu, exp = experience, bullets=exp_bullets, icons=icons, exp_years = exp_years)
+    return render_template('index.html', user=user, skill_cats=skill_cats, skills=skills, edu=edu, exp = experience, bullets=exp_bullets, icons=icons, exp_years = exp_years, form=form)
