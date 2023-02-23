@@ -1,6 +1,6 @@
 gunicorn
 alabaster==0.7.12
-alembic==1.9.2
+# alembic==1.9.2
 appnope @ file:///Users/builder/ci_310/appnope_1642500616005/work
 asttokens @ file:///opt/conda/conda-bld/asttokens_1646925590279/work
 attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1659291887007/work
