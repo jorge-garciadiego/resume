@@ -5,6 +5,7 @@ asttokens @ file:///opt/conda/conda-bld/asttokens_1646925590279/work
 attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1659291887007/work
 Babel==2.10.3
 backcall @ file:///home/ktietz/src/ci/backcall_1611930011877/work
+blinker==1.5
 Bottleneck @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_29949159-f86f-474b-bc1f-aaa1e0e222b4ofusifik/croots/recipe/bottleneck_1657175564045/work
 branca @ file:///home/conda/feedstock_root/build_artifacts/branca_1650311966802/work
 Brotli @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_01vdzesc6m/croots/recipe/brotli-split_1659616063272/work
@@ -37,6 +38,7 @@ Fiona @ file:///Users/runner/miniforge3/conda-bld/fiona_1667566604709/work
 Flask==2.2.2
 Flask-Compress @ file:///tmp/build/80754af9/flask-compress_1623922802283/work
 Flask-Login==0.6.2
+Flask-Mail==0.9.1
 Flask-Migrate==4.0.2
 Flask-SQLAlchemy==3.0.2
 Flask-WTF==1.1.1
